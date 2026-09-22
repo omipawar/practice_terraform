@@ -1,13 +1,17 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "6.64.0"
-    }
-  }
+module "security_group"{
+  source = "../../modules/security group"\
+
+  sg_name = var.sg_name
+  sg_description = var.sg-sg_description
+  vpc_id = var.vpc_id
 }
 
-provider "aws" {
-  # Configuration options
-  region = "ap-south-1"
+module "ec2"{
+  source = "../../modules/ec2"
+
+  ami_id = var.ami_id
+  instance_type = var.instance_type
+  key_name = var.key_name
+  security_group_id = module.security_group.security_group_id
+  instance_name = var.instance_name
 }

@@ -10,7 +10,7 @@ resource "aws_instance" "tf"{
         volume_type = "gp3"
     }
 
-    user_data = file("${path.module}/install.sh")
+    user_data = templatefile("${path.module}/install.sh", {environment = var.environment})
 
     tags = {
         Name = var.instance_name
